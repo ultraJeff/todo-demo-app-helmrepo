@@ -6,6 +6,9 @@ metadata:
   labels:
     app.kubernetes.io/instance: todo-demo-app
 spec:
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
   to:
     kind: Service
     name: todo-demo-app
