@@ -10,8 +10,8 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: app
-    repoURL: https://github.com/tosin2013/todo-demo-app-helmrepo.git
+    path: not-helm
+    repoURL: https://github.com/ultraJeff/todo-demo-app-helmrepo.git
     targetRevision: main
   syncPolicy:
     automated:

@@ -1,17 +1,16 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: todo-demo-app
+  name: todo-demo-app-of-apps
   namespace: openshift-gitops
 spec:
   project: default
   source:
     repoURL: https://github.com/ultraJeff/todo-demo-app-helmrepo
     targetRevision: main
-    path: not-helm
+    path: app-config
   destination:
     server: https://kubernetes.default.svc
-    namespace: todo-demo
   syncOptions:
     - RespectIgnoreDifferences=true
   ignoreDifferences:
@@ -28,26 +27,25 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-
-  patches:
-    - target:
-        group: apps
-        version: v1
-        kind: Deployment
-        name: todo-demo-app
-      patch: |-
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          name: todo-demo-app
-        spec:
-          template:
-            spec:
-              containers:
-              - name: todo-demo-app
-                livenessProbe:
-                  httpGet:
-                    path: /todo.html
-                readinessProbe:
-                  httpGet:
-                    path: /todo.html
+  # patches:
+  #   - target:
+  #       group: apps
+  #       version: v1
+  #       kind: Deployment
+  #       name: todo-demo-app
+  #     patch: |-
+  #       apiVersion: apps/v1
+  #       kind: Deployment
+  #       metadata:
+  #         name: todo-demo-app
+  #       spec:
+  #         template:
+  #           spec:
+  #             containers:
+  #             - name: todo-demo-app
+  #               livenessProbe:
+  #                 httpGet:
+  #                   path: /todo.html
+  #               readinessProbe:
+  #                 httpGet:
+  #                   path: /todo.html

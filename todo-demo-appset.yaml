@@ -1,0 +1,46 @@
+# Need to fix
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: todo-demo-app
+#   namespace: openshift-gitops
+# spec:
+#   generators:
+#     - clusterDecisionResource:
+#         configMapRef: acm-placement
+#         resourceRef:
+#           apiVersion: cluster.open-cluster-management.io/v1beta1
+#           kind: PlacementDecision
+#           namespace: todo-demo-app
+#         labelSelector:
+#           matchLabels:
+#             cluster.open-cluster-management.io/placement: todo-demo-placement
+#         requeueAfterSeconds: 180
+#   template:
+#     metadata:
+#       name: '{{name}}-todo-demo'
+#       annotations:
+#         argocd.argoproj.io/sync-options: RespectIgnoreDifferences=true
+#     spec:
+#       project: default
+#       source:
+#         repoURL: https://github.com/ultraJeff/todo-demo-app-helmrepo
+#         targetRevision: main
+#         path: not-helm
+#       destination:
+#         server: '{{server}}'
+#         namespace: todo-demo
+#       ignoreDifferences:
+#         - group: apps
+#           kind: Deployment
+#           name: todo-demo-app
+#           namespace: todo-demo
+#           jsonPointers:
+#             - /spec/template/spec/containers/0/livenessProbe/httpGet/path
+#             - /spec/template/spec/containers/0/readinessProbe/httpGet/path
+#       syncPolicy:
+#         automated:
+#           prune: true
+#           selfHeal: true
+#         syncOptions:
+#           - CreateNamespace=true
