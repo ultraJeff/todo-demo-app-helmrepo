@@ -18,7 +18,7 @@ spec:
         - resources: {}
           readinessProbe:
             httpGet:
-              path: /
+              path: /todo.html
               port: http
               scheme: HTTP
             timeoutSeconds: 1
@@ -29,7 +29,7 @@ spec:
           name: todo-demo-app
           livenessProbe:
             httpGet:
-              path: /
+              path: /todo.html
               port: http
               scheme: HTTP
             timeoutSeconds: 1
